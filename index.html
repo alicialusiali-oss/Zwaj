@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نخبة المجتمع | زواج وتعارف</title>
+
+  <!-- استدعاء خط Alexandria العصري جداً -->
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0a0a0f;
+      --card-bg: #15151e;
+      --accent-gradient: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+      --text-main: #ffffff;
+      --text-sub: #b3b3c1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Alexandria', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      background-image: radial-gradient(circle at 50% 0%, rgba(255, 65, 108, 0.1) 0%, transparent 50%);
+      background-repeat: no-repeat;
+    }
+
+    .hero-wrapper {
+      max-width: 900px;
+      margin: 40px auto 20px;
+      padding: 0 20px;
+    }
+  
+    .hero-card-box {
+      background: rgba(21, 21, 30, 0.7);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 65, 108, 0.2);
+      border-radius: 24px;
+      padding: 40px 30px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    .hero-card-box h1 {
+      font-size: 45px;
+      font-weight: 900;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+      letter-spacing: -1px;
+    }
+
+    .hero-card-box p {
+      font-size: 16px;
+      color: var(--text-sub);
+      font-weight: 300;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      position: relative;
+      height: 480px;
+      border-radius: 24px;
+      overflow: hidden;
+      background: var(--card-bg);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.05);
+      transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 50px rgba(255, 65, 108, 0.2);
+      border-color: rgba(255, 65, 108, 0.3);
+    }
+
+    .card-img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      transition: transform 0.7s ease;
+    }
+
+    .card:hover .card-img {
+      transform: scale(1.08);
+    }
+
+    .card-overlay {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%;
+      height: 75%;
+      background: linear-gradient(to top, #0a0a0f 15%, rgba(10, 10, 15, 0.8) 45%, transparent 100%);
+      z-index: 2;
+      transition: height 0.4s ease;
+    }
+
+    .card:hover .card-overlay {
+      height: 90%;
+      background: linear-gradient(to top, #0a0a0f 20%, rgba(10, 10, 15, 0.9) 60%, transparent 100%);
+    }
+
+    .card-content {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%;
+      padding: 25px 20px;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .name-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .card-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .online-dot {
+      width: 10px;
+      height: 10px;
+      background-color: #00e676;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #00e676;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(0, 230, 118, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 230, 118, 0); }
+    }
+
+    .tags {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      padding: 4px 12px;
+      border-radius: 30px;
+      font-size: 11px;
+      font-weight: 500;
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-sub);
+      line-height: 1.7;
+      margin-bottom: 15px;
+      max-height: 44px;
+      overflow: hidden;
+      transition: max-height 0.5s ease, color 0.3s ease;
+      text-align: right;
+    }
+
+    .card:hover .card-desc {
+      max-height: 150px;
+      color: #fff;
+    }
+
+    .phone {
+      font-size: 16px;
+      font-weight: 700;
+      color: #ff416c;
+      margin-bottom: 15px;
+      direction: ltr;
+      text-align: right;
+      letter-spacing: 2px;
+    }
+
+    .btn {
+      position: relative;
+      width: 100%;
+      padding: 14px;
+      background: var(--card-bg);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 65, 108, 0.5);
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--accent-gradient);
+      z-index: -1;
+      transition: opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .card:hover .btn {
+      border-color: transparent;
+    }
+
+    .card:hover .btn::before {
+      opacity: 1;
+    }
+
+    .btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 10px 20px rgba(255, 65, 108, 0.4);
+    }
+
+    /* زر عرض المزيد المنفصل في الأسفل */
+    .load-more-container {
+      max-width: 500px;
+      margin: 40px auto 0;
+    }
+
+    .loader {
+      display: none;
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top: 2px solid #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .btn.loading .btn-text { display: none; }
+    .btn.loading .loader { display: block; }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg-dark); }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #ff416c; }
+
+    @media (max-width: 768px) {
+      .hero-card-box h1 { font-size: 32px; }
+      .card { height: 450px; }
+      .card-desc { max-height: 80px; overflow-y: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero-wrapper">
+    <div class="hero-card-box">
+      <h1>منصة فرصة</h1>
+      <p>للزواج الحلال زواج معلن زواج مسيار</p>
+      <p>هناك أرواح تبحث عن السكن والحلال</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="grid">
+      
+      <!-- بطاقة 1 -->
+      <div class="card">
+        <img src="Age31name8.jpg" alt="الهنوف الجعيدي" class="card-img">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="name-row">
+            <h3 class="card-title">الهنوف الجعيدي</h3>
+            <div class="online-dot"></div>
+          </div>
+          <div class="tags">
+            <span class="tag">30 عام</span>
+            <span class="tag">نجران</span>
+            <span class="tag">عانس</span>
+          </div>
+          <p class="card-desc">مديرة مكتب مقاولات ناجحة، قوية ومستقلة، تبني حياتها على أسس من الطموح. تشعر بأنها بحاجة لشريك حياة قوي يستطيع تقديم الدعم العاطفي والجسدي.</p>
+          <div class="phone">+966 5** *** 44</div>
+          <button class="btn" onclick="startChat(this)">
+            <span class="btn-text">مراسلة الان ❤️</span>
+            <div class="loader"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- بطاقة 2 -->
+      <div class="card">
+        <img src="Age26name12.jpg" alt="مياسة" class="card-img">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="name-row">
+            <h3 class="card-title">الأمورة مياسة</h3>
+            <div class="online-dot"></div>
+          </div>
+          <div class="tags">
+            <span class="tag">26 عام</span>
+            <span class="tag">جدة</span>
+            <span class="tag">عازبة</span>
+          </div>
+          <p class="card-desc">جمالها الطبيعي لا يُقاوم، ملامحها ناعمة وعيناها تعكس دفء وإحساس بالاهتمام. تبحث عن شاب قوي يستطيع أن يبادلها الحب والتفاهم.</p>
+          <div class="phone">+966 5** *** 09</div>
+          <button class="btn" onclick="startChat(this)">
+            <span class="btn-text">مراسلة الان ❤️</span>
+            <div class="loader"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- بطاقة 3 -->
+      <div class="card">
+        <img src="Age23name2.jpg" alt="حنان الدوسري" class="card-img">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="name-row">
+            <h3 class="card-title">حنان الدوسري</h3>
+            <div class="online-dot"></div>
+          </div>
+          <div class="tags">
+            <span class="tag">23 عام</span>
+            <span class="tag">جازان</span>
+            <span class="tag">عزباء</span>
+          </div>
+          <p class="card-desc">سيدة في غاية الجمال، جمالها طبيعي ويأسر القلوب. تبحث عن شريك حياتها اللي يعزها ويقدرها، شخص يحس بكل شيء تحتاجه.</p>
+          <div class="phone">+966 5** *** 45</div>
+          <button class="btn" onclick="startChat(this)">
+            <span class="btn-text">مراسلة الان ❤️</span>
+            <div class="loader"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- بطاقة 4 -->
+      <div class="card">
+        <img src="Age27name6.jpg" alt="الأميرة العنود" class="card-img">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="name-row">
+            <h3 class="card-title">الأميرة العنود</h3>
+            <div class="online-dot"></div>
+          </div>
+          <div class="tags">
+            <span class="tag">27 عام</span>
+            <span class="tag">الرياض</span>
+            <span class="tag">عزباء</span>
+          </div>
+          <p class="card-desc">مصممة أزياء مبدعة، جمالها يفوق الوصف وملامحها ساحرة. تبحث عن الزواج الحلال، تبي شريك يكون معها ويعزها ويقدر قيمتها.</p>
+          <div class="phone">+966 5** *** 55</div>
+          <button class="btn" onclick="startChat(this)">
+            <span class="btn-text">مراسلة الان ❤️</span>
+            <div class="loader"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- بطاقة 5 -->
+      <div class="card">
+        <img src="Age27name11.jpg" alt="سارة اليامي" class="card-img">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="name-row">
+            <h3 class="card-title">سارة اليامي</h3>
+            <div class="online-dot"></div>
+          </div>
+          <div class="tags">
+            <span class="tag">27 عام</span>
+            <span class="tag">نجران</span>
+            <span class="tag">عازبة</span>
+          </div>
+          <p class="card-desc">بدوية أصيلة، صاحبة متجر ساعات فاخر. جمالها طبيعي وأناقتها فطرية. تبحث عن شريك حياة يشاركها مسيرتها ويكون سندًا لها.</p>
+          <div class="phone">+966 5** *** 05</div>
+          <button class="btn" onclick="startChat(this)">
+            <span class="btn-text">مراسلة الان ❤️</span>
+            <div class="loader"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- بطاقة 6 -->
+      <div class="card">
+        <img src="Age28name1.jpg" alt="نورة العتيبي" class="card-img">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="name-row">
+            <h3 class="card-title">نورة العتيبي</h3>
+            <div class="online-dot"></div>
+          </div>
+          <div class="tags">
+            <span class="tag">28 عام</span>
+            <span class="tag">الرياض</span>
+            <span class="tag">مطلقة</span>
+          </div>
+          <p class="card-desc">دكتورة ناجحة وعندها خير، مستقلة ومرتاحة، ودّها برجل يكون ونيس وسند لها. ما يهمها وضعه المادي، أهم شي رجال يخاف الله.</p>
+          <div class="phone">+966 5** *** 23</div>
+          <button class="btn" onclick="startChat(this)">
+            <span class="btn-text">مراسلة الان ❤️</span>
+            <div class="loader"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- بطاقة 7 -->
+      <div class="card">
+        <img src="Age31name9.jpg" alt="شمس المحرقي" class="card-img">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="name-row">
+            <h3 class="card-title">شمس المحرقي</h3>
+            <div class="online-dot"></div>
+          </div>
+          <div class="tags">
+            <span class="tag">31 عام</span>
+            <span class="tag">بيشة</span>
+            <span class="tag">عازبة</span>
+          </div>
+          <p class="card-desc">عندها محل ملابس، جمالها ساحر وأناقتها لا تُضاهى. تبحث عن شريك شاب يشاركها حياتها ويكون سند لها في كل شيء.</p>
+          <div class="phone">+966 5** *** 10</div>
+          <button class="btn" onclick="startChat(this)">
+            <span class="btn-text">مراسلة الان ❤️</span>
+            <div class="loader"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- بطاقة 8 -->
+      <div class="card">
+        <img src="Age25name3.jpg" alt="ريم الوليد" class="card-img">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="name-row">
+            <h3 class="card-title">ريم الوليد</h3>
+            <div class="online-dot"></div>
+          </div>
+          <div class="tags">
+            <span class="tag">26 عام</span>
+            <span class="tag">الطائف</span>
+            <span class="tag">مطلقة</span>
+          </div>
+          <p class="card-desc">ممرضة طيّبة وحنونة، إنسانة مستقلة وقوية. تحلم بالزواج بالحلال، وتبي شريك يملأ قلبها بالحب والراحة النفسية.</p>
+          <div class="phone">+966 5** *** 37</div>
+          <button class="btn" onclick="startChat(this)">
+            <span class="btn-text">مراسلة الان ❤️</span>
+            <div class="loader"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- بطاقة 9 -->
+      <div class="card">
+        <img src="Age33name4.jpg" alt="حياة الشمراني" class="card-img">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="name-row">
+            <h3 class="card-title">حياة الشمراني</h3>
+            <div class="online-dot"></div>
+          </div>
+          <div class="tags">
+            <span class="tag">33 عام</span>
+            <span class="tag">الدمام</span>
+            <span class="tag">عانس</span>
+          </div>
+          <p class="card-desc">طباخة حلويات ماهرة، تعيش بشغف. تبحث عن علاقة فيها حب واهتمام، شريك يقدر يحقق لها الراحة النفسية والعاطفية.</p>
+          <div class="phone">+966 5** *** 30</div>
+          <button class="btn" onclick="startChat(this)">
+            <span class="btn-text">مراسلة الان ❤️</span>
+            <div class="loader"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- بطاقة 10 -->
+      <div class="card">
+        <img src="Age29name5.jpg" alt="فاطمة اليزيدي" class="card-img">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="name-row">
+            <h3 class="card-title">فاطمة اليزيدي</h3>
+            <div class="online-dot"></div>
+          </div>
+          <div class="tags">
+            <span class="tag">29 عام</span>
+            <span class="tag">جدة</span>
+            <span class="tag">مطلقة</span>
+          </div>
+          <p class="card-desc">رسامة موهوبة، تعيش في عالم الألوان. تفتقد لشريك حياة يعزز لها حياتها العاطفية ويشبع رغباتها بالحلال.</p>
+          <div class="phone">+966 5** *** 96</div>
+          <button class="btn" onclick="startChat(this)">
+            <span class="btn-text">مراسلة الان ❤️</span>
+            <div class="loader"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- بطاقة 11 -->
+      <div class="card">
+        <img src="Age35name7.jpg" alt="زهراء المطيري" class="card-img">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="name-row">
+            <h3 class="card-title">زهراء المطيري</h3>
+            <div class="online-dot"></div>
+          </div>
+          <div class="tags">
+            <span class="tag">36 عام</span>
+            <span class="tag">المدينة المنورة</span>
+            <span class="tag">أرملة</span>
+          </div>
+          <p class="card-desc">صاحبة محل أثاث ذات ذوق عالي. تبحث عن شريك حياة قوي ومؤثر قادر على توفير الدعم العاطفي.</p>
+          <div class="phone">+966 5** *** 36</div>
+          <button class="btn" onclick="startChat(this)">
+            <span class="btn-text">مراسلة الان ❤️</span>
+            <div class="loader"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- بطاقة 12 -->
+      <div class="card">
+        <img src="Age28name10.jpg" alt="حسناء يوسف" class="card-img">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="name-row">
+            <h3 class="card-title">حسناء يوسف</h3>
+            <div class="online-dot"></div>
+          </div>
+          <div class="tags">
+            <span class="tag">28 عام</span>
+            <span class="tag">الرياض</span>
+            <span class="tag">عازبة</span>
+          </div>
+          <p class="card-desc">جمالها لا يُقاوم وأناقتها مميزة. تبحث عن شريك حياة (زواج عادي أو مسيار) يشاركها لحظات السعادة.</p>
+          <div class="phone">+966 5** *** 53</div>
+          <button class="btn" onclick="startChat(this)">
+            <span class="btn-text">مراسلة الان ❤️</span>
+            <div class="loader"></div>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- زر عرض المزيد في الأسفل خارج الشبكة بشكل مرتب ومنفصل -->
+    <div class="load-more-container">
+      <button class="btn" onclick="startChat(this)">
+        <span class="btn-text">عرض المزيد 🥰😍</span>
+        <div class="loader"></div>
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    function startChat(btn) {
+      btn.classList.add('loading');
+      btn.style.pointerEvents = 'none';
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+        </p>
+          <div class="phone">+966 5** *** 36</div>
+          <button class="btn" onclick="startChat(this)">
+          <span class="btn-text"> مراسلة الان ❤️</span>
+            <div class="loader"></div>
+          </button>
+        </div>
+      </div>
+
+      <!-- بطاقة 12 -->
+      <div class="card">
+        <img src="Age28name10.jpg" alt="حسناء يوسف" class="card-img">
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="name-row">
+            <h3 class="card-title">حسناء يوسف</h3>
+            <div class="online-dot"></div>
+          </div>
+          <div class="tags">
+            <span class="tag">28 عام</span>
+            <span class="tag">الرياض</span>
+            <span class="tag">عازبة</span>
+          </div>
+          <p class="card-desc">             جمالها لا يُقاوم وأناقتها مميزة. تبحث عن شريك حياة (زواج عادي أو مسيار) يشاركها لحظات السعادة ويكون سندًا لها في كل جوانب حياتها.</p>
+          <div class="phone">+966 5** *** 53</div>
+          <button class="btn" onclick="startChat(this)">
+            <span class="btn-text"> مراسلة الان ❤️</span>
+            <div class="loader"></div>
+          </button>
+        </div>
+      </div>
+<button class="btn" onclick="startChat(this)">
+       <span class="btn-text"> عرض المزيد 🥰😍</span>
+       <div class="loader"></div>
+     </button> 
+     
+    </div>
+  </div>
+
+  <script>
+    function startChat(btn) {
+      // تفعيل تأثير التحميل
+      btn.classList.add('loading');
+      btn.style.pointerEvents = 'none'; // منع النقر المزدوج
+      
+      // التوجيه للصفحة التالية بعد ثانية ونصف
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+html>
+
+
+
+
+
+(() => {
+        window.location.href = 'login.html';
+      }, 1500);
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+��يك حياة (زواج عادي أو مسيار) يشاركها لحظات السعادة ويكون سندًا لها في كل جوانب حياتها.
+          </p>
+          <div class="phone">+966 5** *** 53</div>
+          <div class="btn-wrapper">
+            <button class="btn" onclick="startChat(event, this)">
+              <span class="btn-text">بدء محادثة سرية 💬</span>
+              <div class="loader"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // دالة فتح وإغلاق البطاقة عند النقر عليها
+    function toggleCard(cardElement) {
+      // إذا تم النقر على زر المراسلة داخل البطاقة، لا تقم بغلق/فتح البطاقة بل دع الزر يعمل
+      // (هذه الخطوة تمنع التداخل)
+      
+      // إغلاق أي بطاقة أخرى مفتوحة (اختياري، لجعل التصميم منظماً)
+      const allCards = document.querySelectorAll('.card');
+      allCards.forEach(card => {
+        if (card !== cardElement) {
+          card.classList.remove('active');
+        }
+      });
+
+      // تبديل حالة البطاقة الحالية (فتح/إغلاق)
+      cardElement.classList.toggle('active');
+    }
+
+    // دالة تشغيل التحميل والتحويل للصفحة الثانية عند الضغط على الزر
+    function startChat(event, btn) {
+      event.stopPropagation(); // منع تفعيل حدث الضغط الخاص بالبطاقة
+      btn.classList.add('loading');
+      btn.style.pointerEvents = 'none';
+      
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 1500);
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+

